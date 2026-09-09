@@ -136,9 +136,188 @@
       background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
       background-size: 24px 24px;
     }
+
+    /* Scroll reveal animations */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-reveal="left"] {
+      transform: translateX(-40px) translateY(0);
+    }
+    [data-reveal="left"].revealed {
+      transform: translateX(0);
+    }
+    [data-reveal="right"] {
+      transform: translateX(40px) translateY(0);
+    }
+    [data-reveal="right"].revealed {
+      transform: translateX(0);
+    }
+    [data-reveal="scale"] {
+      transform: scale(0.92);
+    }
+    [data-reveal="scale"].revealed {
+      transform: scale(1);
+    }
+
+    /* Staggered children */
+    [data-stagger] > * {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-stagger].revealed > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-stagger].revealed > *:nth-child(1) { transition-delay: 0ms; }
+    [data-stagger].revealed > *:nth-child(2) { transition-delay: 100ms; }
+    [data-stagger].revealed > *:nth-child(3) { transition-delay: 200ms; }
+    [data-stagger].revealed > *:nth-child(4) { transition-delay: 300ms; }
+    [data-stagger].revealed > *:nth-child(5) { transition-delay: 400ms; }
+    [data-stagger].revealed > *:nth-child(6) { transition-delay: 500ms; }
+    [data-stagger].revealed > *:nth-child(7) { transition-delay: 600ms; }
+    [data-stagger].revealed > *:nth-child(8) { transition-delay: 700ms; }
+
+    /* Hero text split animation */
+    .hero-line {
+      display: block;
+      overflow: hidden;
+    }
+    .hero-line-inner {
+      display: block;
+      transform: translateY(105%);
+      transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-loaded .hero-line-inner {
+      transform: translateY(0);
+    }
+    .hero-line:nth-child(2) .hero-line-inner { transition-delay: 0.12s; }
+    .hero-line:nth-child(3) .hero-line-inner { transition-delay: 0.24s; }
+
+    /* Magnetic button effect */
+    .magnetic-btn {
+      transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    /* Glowing border on project cards */
+    .project-glow {
+      position: relative;
+    }
+    .project-glow::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      opacity: 0;
+      background: linear-gradient(135deg, rgba(226, 201, 116, 0.15), rgba(128, 209, 246, 0.15));
+      transition: opacity 0.4s;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .project-glow:hover::after {
+      opacity: 1;
+    }
+
+    /* Floating indicator */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #e2c974, #80d1f6);
+      z-index: 100;
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+
+    /* Counter animation pulse */
+    @keyframes countPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    .count-done {
+      animation: countPulse 0.4s ease-out;
+    }
+
+    /* Nav link underline animation */
+    .nav-link-anim {
+      position: relative;
+    }
+    .nav-link-anim::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    .nav-link-anim:hover::after,
+    .nav-link-anim.active::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Parallax layers */
+    .parallax-slow { will-change: transform; }
+
+    /* Cursor follower */
+    .cursor-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: #e2c974;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: width 0.3s, height 0.3s, margin 0.3s;
+    }
+    .cursor-dot.expanded {
+      width: 40px;
+      height: 40px;
+      margin: -16px 0 0 -16px;
+      background: rgba(226, 201, 116, 0.15);
+      border: 1px solid rgba(226, 201, 116, 0.4);
+    }
+
+    /* Skill bar fill */
+    .skill-fill {
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .revealed .skill-fill {
+      width: var(--fill);
+    }
   </style>
 </head>
 <body class="bg-background text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container relative">
+<!-- Scroll Progress Bar -->
+<div class="scroll-progress" id="scrollProgress"></div>
+<!-- Custom Cursor -->
+<div class="cursor-dot hidden md:block" id="cursorDot"></div>
 <!-- Subtle Grain & Optical Depth -->
 <div class="fixed inset-0 grain-overlay pointer-events-none z-0 opacity-40"></div>
 <!-- TopNavBar -->
@@ -153,10 +332,10 @@
 </div>
 <!-- Nav Links -->
 <nav class="hidden md:flex items-center gap-space-xl">
-<a class="text-primary border-b border-primary pb-1 font-semibold font-technical-data text-technical-data hover:text-primary transition-colors duration-200" href="#works">Selected Works</a>
-<a class="text-on-surface-variant font-medium font-technical-data text-technical-data hover:text-primary transition-colors duration-200" href="#expertise">Expertise</a>
-<a class="text-on-surface-variant font-medium font-technical-data text-technical-data hover:text-primary transition-colors duration-200" href="#philosophy">Philosophy</a>
-<a class="text-on-surface-variant font-medium font-technical-data text-technical-data hover:text-primary transition-colors duration-200" href="#archive">Archive</a>
+<a class="nav-link-anim text-primary font-semibold font-technical-data text-technical-data hover:text-primary transition-colors duration-200" href="#works">Selected Works</a>
+<a class="nav-link-anim text-on-surface-variant font-medium font-technical-data text-technical-data hover:text-primary transition-colors duration-200" href="#expertise">Expertise</a>
+<a class="nav-link-anim text-on-surface-variant font-medium font-technical-data text-technical-data hover:text-primary transition-colors duration-200" href="#philosophy">Philosophy</a>
+<a class="nav-link-anim text-on-surface-variant font-medium font-technical-data text-technical-data hover:text-primary transition-colors duration-200" href="#archive">Archive</a>
 </nav>
 <!-- Trailing -->
 <div class="flex items-center gap-space-md">
@@ -168,11 +347,11 @@
 <span class="material-symbols-outlined text-lg">terminal</span>
 </button>
 </div>
-<div class="hidden xl:flex items-center gap-2 px-3 py-1 bg-surface-container-low border border-outline-variant/30 rounded">
+<div class="hidden xl:flex items-center gap-2 px-3 py-1 bg-surface-container-low border border-outline-variant/30 rounded float-anim">
 <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
 <span class="font-label-caps text-label-caps text-secondary tracking-widest uppercase">Available for Q3/Q4</span>
 </div>
-<a class="inline-flex items-center justify-center bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase px-5 py-2.5 rounded hover:bg-primary transition-all duration-200 active:scale-95 shadow-sm" href="#inquiry">
+<a class="magnetic-btn inline-flex items-center justify-center bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase px-5 py-2.5 rounded hover:bg-primary transition-all duration-200 active:scale-95 shadow-sm" href="#inquiry">
           Initiate Dialogue
         </a>
 </div>
@@ -182,7 +361,7 @@
 <!-- HERO SECTION -->
 <section class="min-h-[90vh] flex flex-col justify-between pt-space-3xl pb-space-4xl px-gutter-mobile md:px-gutter-desktop max-w-max-content-width mx-auto">
 <!-- Category Stamp -->
-<div class="flex flex-wrap items-center justify-between gap-space-md pb-space-xl border-b border-outline-variant/30">
+<div class="flex flex-wrap items-center justify-between gap-space-md pb-space-xl border-b border-outline-variant/30" data-reveal>
 <div class="inline-flex items-center gap-3">
 <span class="w-1.5 h-1.5 bg-primary-container"></span>
 <span class="font-label-caps text-label-caps text-primary tracking-widest">INDEPENDENT CREATIVE ARCHITECT &amp; WEB ARTISAN</span>
@@ -195,26 +374,28 @@
 </div>
 <!-- Grand Headline -->
 <div class="py-space-3xl space-y-space-xl">
-<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface max-w-6xl">
-          Crafting high-conviction digital experiences that define category leaders.
+<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface max-w-6xl" id="heroHeadline">
+          <span class="hero-line"><span class="hero-line-inner">Crafting high-conviction digital</span></span>
+          <span class="hero-line"><span class="hero-line-inner">experiences that define</span></span>
+          <span class="hero-line"><span class="hero-line-inner">category leaders.</span></span>
         </h1>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl pt-space-lg items-end">
-<p class="lg:col-span-7 font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed">
+<p class="lg:col-span-7 font-body-lg text-body-lg text-on-surface-variant max-w-2xl leading-relaxed" data-reveal>
             I bridge the chasm between expressive editorial design and uncompromising performance engineering. Specializing in bespoke brand flagships, immersive WebGL interactions, and high-converting modern web platforms.
           </p>
-<div class="lg:col-span-5 flex flex-wrap items-center gap-space-md justify-start lg:justify-end">
-<a class="px-7 py-3.5 bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase rounded hover:bg-primary transition-all duration-200 shadow-sm flex items-center gap-2" href="#works">
+<div class="lg:col-span-5 flex flex-wrap items-center gap-space-md justify-start lg:justify-end" data-reveal="right">
+<a class="magnetic-btn px-7 py-3.5 bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase rounded hover:bg-primary transition-all duration-200 shadow-sm flex items-center gap-2" href="#works">
 <span>Explore Selected Archive</span>
 <span class="material-symbols-outlined text-sm">arrow_forward</span>
 </a>
-<a class="px-7 py-3.5 border border-outline-variant/60 text-on-surface font-label-caps text-label-caps uppercase rounded hover:border-secondary hover:text-secondary transition-all duration-200 backdrop-blur-sm" href="#inquiry">
+<a class="magnetic-btn px-7 py-3.5 border border-outline-variant/60 text-on-surface font-label-caps text-label-caps uppercase rounded hover:border-secondary hover:text-secondary transition-all duration-200 backdrop-blur-sm" href="#inquiry">
               Direct Booking / Terminal
             </a>
 </div>
 </div>
 </div>
 <!-- Trust & Telemetry Bar -->
-<div class="pt-space-xl border-t border-outline-variant/30 grid grid-cols-2 md:grid-cols-4 gap-space-lg">
+<div class="pt-space-xl border-t border-outline-variant/30 grid grid-cols-2 md:grid-cols-4 gap-space-lg" data-stagger>
 <div class="space-y-1">
 <span class="font-label-caps text-label-caps text-outline uppercase block">Recognition</span>
 <p class="font-technical-data text-technical-data text-on-surface font-medium">4x Site of the Day (Awwwards/FWA)</p>
@@ -235,7 +416,7 @@
 </section>
 <!-- SECTION 2: FEATURED CASE STUDIES -->
 <section class="py-space-5xl px-gutter-mobile md:px-gutter-desktop max-w-max-content-width mx-auto" id="works">
-<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-3xl pb-space-md border-b border-outline-variant/30">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-3xl pb-space-md border-b border-outline-variant/30" data-reveal>
 <div>
 <span class="font-label-caps text-label-caps text-primary tracking-widest block mb-2">INDEX / 2024 — 2025</span>
 <h2 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface">Selected Flagship Works</h2>
@@ -246,9 +427,9 @@
 </div>
 </div>
 <!-- Asymmetric Grid -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-2xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-2xl" data-stagger>
 <!-- Project 01: Vespera Audio -->
-<article class="lg:col-span-8 group relative bg-surface-container-low border border-white/[0.07] hover:border-primary-container/40 transition-all duration-300 rounded p-space-xl flex flex-col justify-between overflow-hidden">
+<article class="lg:col-span-8 group relative project-glow bg-surface-container-low border border-white/[0.07] hover:border-primary-container/40 transition-all duration-300 rounded p-space-xl flex flex-col justify-between overflow-hidden">
 <div>
 <div class="flex justify-between items-center mb-space-lg">
 <span class="font-technical-data text-technical-data text-secondary tracking-widest uppercase">01 / ACOUSTIC ARCHITECTURE</span>
@@ -275,7 +456,7 @@
 </div>
 </article>
 <!-- Project 02: Kaelen Capital -->
-<article class="lg:col-span-4 group relative bg-surface-container-low border border-white/[0.07] hover:border-primary-container/40 transition-all duration-300 rounded p-space-xl flex flex-col justify-between overflow-hidden">
+<article class="lg:col-span-4 group relative project-glow bg-surface-container-low border border-white/[0.07] hover:border-primary-container/40 transition-all duration-300 rounded p-space-xl flex flex-col justify-between overflow-hidden">
 <div>
 <div class="flex justify-between items-center mb-space-lg">
 <span class="font-technical-data text-technical-data text-secondary tracking-widest uppercase">02 / VENTURE MATRIX</span>
@@ -298,7 +479,7 @@
 </div>
 </article>
 <!-- Project 03: Studio Monolith -->
-<article class="lg:col-span-5 group relative bg-surface-container-low border border-white/[0.07] hover:border-primary-container/40 transition-all duration-300 rounded p-space-xl flex flex-col justify-between overflow-hidden">
+<article class="lg:col-span-5 group relative project-glow bg-surface-container-low border border-white/[0.07] hover:border-primary-container/40 transition-all duration-300 rounded p-space-xl flex flex-col justify-between overflow-hidden">
 <div>
 <div class="flex justify-between items-center mb-space-lg">
 <span class="font-technical-data text-technical-data text-secondary tracking-widest uppercase">03 / SPATIAL MONOGRAPH</span>
@@ -321,7 +502,7 @@
 </div>
 </article>
 <!-- Project 04: Nexus Intelligence -->
-<article class="lg:col-span-7 group relative bg-surface-container-low border border-white/[0.07] hover:border-primary-container/40 transition-all duration-300 rounded p-space-xl flex flex-col justify-between overflow-hidden">
+<article class="lg:col-span-7 group relative project-glow bg-surface-container-low border border-white/[0.07] hover:border-primary-container/40 transition-all duration-300 rounded p-space-xl flex flex-col justify-between overflow-hidden">
 <div>
 <div class="flex justify-between items-center mb-space-lg">
 <span class="font-technical-data text-technical-data text-secondary tracking-widest uppercase">04 / MACHINE LEARNING OS</span>
@@ -359,7 +540,7 @@
 <!-- SECTION 3: CRAFT & SERVICES MATRIX -->
 <section class="py-space-5xl bg-surface-container-lowest border-y border-outline-variant/20" id="expertise">
 <div class="px-gutter-mobile md:px-gutter-desktop max-w-max-content-width mx-auto">
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl mb-space-3xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl mb-space-3xl" data-reveal>
 <div class="lg:col-span-5">
 <span class="font-label-caps text-label-caps text-primary tracking-widest block mb-2">CAPABILITIES SPECIFICATION</span>
 <h2 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface">Precision Core Architecture</h2>
@@ -371,7 +552,7 @@
 </div>
 </div>
 <!-- Matrix Bento Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-outline-variant/20 border border-outline-variant/20">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-outline-variant/20 border border-outline-variant/20" data-stagger>
 <div class="bg-surface-container-low p-space-2xl hover:bg-surface-container transition-colors duration-200">
 <span class="font-technical-data text-technical-data text-secondary block mb-space-md">01 // VISUAL RIGOR</span>
 <h3 class="font-headline-md text-headline-md text-on-surface mb-space-sm">Bespoke Web Design &amp; Art Direction</h3>
@@ -425,14 +606,14 @@
 </section>
 <!-- SECTION 4: PHILOSOPHY & PROCESS -->
 <section class="py-space-5xl px-gutter-mobile md:px-gutter-desktop max-w-max-content-width mx-auto" id="philosophy">
-<div class="max-w-2xl mb-space-3xl">
+<div class="max-w-2xl mb-space-3xl" data-reveal>
 <span class="font-label-caps text-label-caps text-primary tracking-widest block mb-2">METHODOLOGY BLUEPRINT</span>
 <h2 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface">The Tripartite Protocol</h2>
 <p class="font-body-md text-body-md text-on-surface-variant mt-3">
           A disciplined three-stage progression that eliminates ambiguity and guarantees immaculate execution.
         </p>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-space-xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-xl" data-stagger>
 <div class="p-space-xl bg-surface-container-low border-t-2 border-primary space-y-space-md">
 <div class="flex justify-between items-center">
 <span class="font-display-hero text-headline-lg text-primary">01</span>
@@ -477,14 +658,14 @@
 <!-- SECTION 5: CLIENT ENDORSEMENTS -->
 <section class="py-space-5xl bg-surface-container-lowest border-y border-outline-variant/20">
 <div class="px-gutter-mobile md:px-gutter-desktop max-w-max-content-width mx-auto">
-<div class="flex flex-col md:flex-row justify-between md:items-end mb-space-3xl pb-space-md border-b border-outline-variant/30">
+<div class="flex flex-col md:flex-row justify-between md:items-end mb-space-3xl pb-space-md border-b border-outline-variant/30" data-reveal>
 <div>
 <span class="font-label-caps text-label-caps text-primary tracking-widest block mb-2">REPUTATION AUDIT</span>
 <h2 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface">Collaborator Testimonials</h2>
 </div>
 <span class="hidden md:inline-block font-technical-data text-technical-data text-outline">VERIFIED FOUNDER DISPATCHES</span>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-space-xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-xl" data-stagger>
 <div class="p-space-xl bg-surface-container-low border border-white/[0.05] flex flex-col justify-between rounded">
 <p class="font-body-lg text-body-lg text-on-surface italic mb-space-xl">
               "Taha embodies that rarest paradox: an artist with exquisite taste who also happens to write code as clean as a Swiss chronometer. Our conversion surged 240% within four weeks of launch."
@@ -532,7 +713,7 @@
 </section>
 <!-- SECTION 6: INQUIRY & TERMINAL -->
 <section class="py-space-5xl px-gutter-mobile md:px-gutter-desktop max-w-max-content-width mx-auto" id="inquiry">
-<div class="bg-surface-container-low border border-white/[0.08] p-space-xl md:p-space-3xl rounded relative overflow-hidden">
+<div class="bg-surface-container-low border border-white/[0.08] p-space-xl md:p-space-3xl rounded relative overflow-hidden" data-reveal="scale">
 <div class="absolute -right-24 -top-24 w-96 h-96 bg-primary-container/5 rounded-full blur-3xl pointer-events-none"></div>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-3xl relative z-10">
 <!-- Editorial Pitch -->
@@ -597,7 +778,7 @@
 <label class="block font-label-caps text-label-caps text-on-surface-variant uppercase mb-2">Scope &amp; Vision Overview</label>
 <textarea class="w-full bg-surface-container-low border border-outline-variant/40 rounded px-4 py-3 text-body-md font-body-md text-on-surface focus:border-primary-container focus:outline-none placeholder:text-outline/50 transition-colors" placeholder="Tell me about your core product, timeline target, and ambition..." rows="3"></textarea>
 </div>
-<button class="w-full py-4 bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase rounded hover:bg-primary transition-all duration-200 shadow-md flex items-center justify-center gap-2" type="submit">
+<button class="magnetic-btn w-full py-4 bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase rounded hover:bg-primary transition-all duration-200 shadow-md flex items-center justify-center gap-2" type="submit">
 <span>Transmit Project Specification</span>
 <span class="material-symbols-outlined text-sm">send</span>
 </button>
@@ -658,16 +839,187 @@
 </div>
 </div>
 </footer>
-<!-- Smooth scroll -->
+<!-- Animation Engine -->
 <script>
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
+(function() {
+  // 1. Scroll progress bar
+  const progressBar = document.getElementById('scrollProgress');
+  function updateProgress() {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const p = h > 0 ? window.scrollY / h : 0;
+    progressBar.style.transform = 'scaleX(' + p + ')';
+  }
+
+  // 2. Scroll reveal observer
+  const revealEls = document.querySelectorAll('[data-reveal], [data-stagger]');
+  const revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(function(el) { revealObserver.observe(el); });
+
+  // 3. Hero text entrance
+  requestAnimationFrame(function() {
+    setTimeout(function() {
+      document.querySelector('.py-space-3xl').classList.add('hero-loaded');
+    }, 300);
+  });
+
+  // 4. Counter animation for trust bar numbers
+  function animateCounters() {
+    document.querySelectorAll('[data-count]').forEach(function(el) {
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      var suffix = el.getAttribute('data-suffix') || '';
+      var prefix = el.getAttribute('data-prefix') || '';
+      var duration = 1600;
+      var start = performance.now();
+      function tick(now) {
+        var elapsed = now - start;
+        var progress = Math.min(elapsed / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = prefix + Math.round(target * eased) + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          el.classList.add('count-done');
+        }
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+
+  // 5. Custom cursor follower (desktop only)
+  var cursor = document.getElementById('cursorDot');
+  if (cursor && window.matchMedia('(pointer: fine)').matches) {
+    var cx = 0, cy = 0, tx = 0, ty = 0;
+    document.addEventListener('mousemove', function(e) {
+      tx = e.clientX; ty = e.clientY;
+    });
+    function tickCursor() {
+      cx += (tx - cx) * 0.15;
+      cy += (ty - cy) * 0.15;
+      cursor.style.left = cx + 'px';
+      cursor.style.top = cy + 'px';
+      requestAnimationFrame(tickCursor);
+    }
+    tickCursor();
+
+    document.querySelectorAll('a, button, .project-glow').forEach(function(el) {
+      el.addEventListener('mouseenter', function() { cursor.classList.add('expanded'); });
+      el.addEventListener('mouseleave', function() { cursor.classList.remove('expanded'); });
+    });
+  } else if (cursor) {
+    cursor.style.display = 'none';
+  }
+
+  // 6. Magnetic button effect
+  document.querySelectorAll('.magnetic-btn').forEach(function(btn) {
+    btn.addEventListener('mousemove', function(e) {
+      var rect = btn.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = 'translate(' + (x * 0.2) + 'px, ' + (y * 0.2) + 'px)';
+    });
+    btn.addEventListener('mouseleave', function() {
+      btn.style.transform = 'translate(0, 0)';
+    });
+  });
+
+  // 7. Parallax on hero elements
+  var heroSection = document.querySelector('section.min-h-\\[90vh\\]');
+  function handleParallax() {
+    var scrollY = window.scrollY;
+    if (heroSection && scrollY < window.innerHeight) {
+      var headline = document.getElementById('heroHeadline');
+      if (headline) headline.style.transform = 'translateY(' + (scrollY * 0.08) + 'px)';
+    }
+  }
+
+  // 8. Active nav link tracking
+  var navLinks = document.querySelectorAll('.nav-link-anim');
+  var sections = [];
+  navLinks.forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      var sec = document.querySelector(href);
+      if (sec) sections.push({ el: sec, link: link, id: href });
     }
   });
-});
+  function updateActiveNav() {
+    var scrollPos = window.scrollY + 200;
+    var active = null;
+    sections.forEach(function(s) {
+      if (s.el.offsetTop <= scrollPos) active = s;
+    });
+    navLinks.forEach(function(l) {
+      l.classList.remove('active', 'text-primary', 'font-semibold');
+      l.classList.add('text-on-surface-variant');
+    });
+    if (active) {
+      active.link.classList.add('active', 'text-primary', 'font-semibold');
+      active.link.classList.remove('text-on-surface-variant');
+    }
+  }
+
+  // 9. Tilt effect on project cards
+  document.querySelectorAll('.project-glow').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = 'perspective(800px) rotateY(' + (x * 3) + 'deg) rotateX(' + (-y * 3) + 'deg)';
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = 'perspective(800px) rotateY(0) rotateX(0)';
+      card.style.transition = 'transform 0.5s cubic-bezier(0.33, 1, 0.68, 1)';
+      setTimeout(function() { card.style.transition = ''; }, 500);
+    });
+  });
+
+  // 10. Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+    anchor.addEventListener('click', function(e) {
+      var target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Scroll event consolidation
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        updateProgress();
+        handleParallax();
+        updateActiveNav();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Init
+  updateProgress();
+  updateActiveNav();
+
+  // Trigger counters when trust bar is visible
+  var trustBar = document.querySelector('[data-stagger]');
+  if (trustBar) {
+    var counterObserver = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        animateCounters();
+        counterObserver.disconnect();
+      }
+    }, { threshold: 0.3 });
+    counterObserver.observe(trustBar);
+  }
+})();
 </script>
 </body></html>
